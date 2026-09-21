@@ -9,7 +9,7 @@ import { captureLogs, throwTimeout } from '../alien/TestHelpers';
 import { concatMap, distinct, firstValueFrom, mergeMap, of, toArray } from 'rxjs';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import type { Editor } from 'tinymce';
+import type { Editor } from 'editor42';
 import { expect } from 'chai';
 import { Fun } from '@ephox/katamari';
 import { Waiter } from '@ephox/agar';
@@ -21,7 +21,7 @@ describe('PropTest', () => {
       const [ message ] = log;
       return (
         typeof message === 'string' &&
-        message.includes('TinyMCE-Angular: an element with id [') &&
+        message.includes('editor42-angular: an element with id [') &&
         message.includes('Editors with duplicate Id will not be able to mount')
       );
     });
@@ -42,7 +42,7 @@ describe('PropTest', () => {
       )
     );
 
-  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
+  eachVersionContext([ 'editor42', '4', '5', '6', '7', '8' ], () => {
     context('Single editor with ID', () => {
       @Component({
         standalone: true,

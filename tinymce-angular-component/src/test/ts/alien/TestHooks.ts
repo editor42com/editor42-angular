@@ -6,9 +6,11 @@ import { firstValueFrom, map, switchMap, tap } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Optional, Singleton } from '@ephox/katamari';
 import { VersionLoader } from '@tinymce/miniature';
-import { deleteTinymce, throwTimeout } from './TestHelpers';
+import { cleanAllEngines, cleanupGlobalEditor42, pLoadEditor42, throwTimeout } from './TestHelpers';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
-import type { Editor } from 'tinymce';
+import type { Editor } from 'editor42';
+
+export type Engine = Version | 'editor42';
 
 export const fixtureHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata) => {
   before(async () => {
@@ -18,12 +20,17 @@ export const fixtureHook = <T = unknown>(component: Type<T>, moduleDef: TestModu
   return () => TestBed.createComponent(component);
 };
 
-export const tinymceVersionHook = (version: Version) => {
+export const tinymceVersionHook = (version: Engine) => {
   before(async () => {
-    await VersionLoader.pLoadVersion(version);
+    if (version === 'editor42') {
+      await pLoadEditor42();
+    } else {
+      cleanupGlobalEditor42();
+      await VersionLoader.pLoadVersion(version);
+    }
   });
   after(() => {
-    deleteTinymce();
+    cleanAllEngines();
   });
 };
 
@@ -96,7 +103,7 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
   };
 };
 
-export const eachVersionContext = (versions: Version[], fn: (version: Version) => void) =>
+export const eachVersionContext = (versions: Engine[], fn: (version: Engine) => void) =>
   versions.forEach((version) =>
     context(`With version ${version}`, () => {
       tinymceVersionHook(version);

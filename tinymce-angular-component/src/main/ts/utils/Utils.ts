@@ -12,7 +12,7 @@ import { HasEventTargetAddRemove } from 'rxjs/internal/observable/fromEvent';
 
 import { EditorComponent } from '../editor/editor.component';
 import { validEvents, Events } from '../editor/Events';
-import { Editor } from 'tinymce';
+import type { Editor } from 'editor42';
 
 // Caretaker note: `fromEvent` supports passing JQuery-style event targets, the editor has `on` and `off` methods which
 // will be invoked upon subscription and teardown.

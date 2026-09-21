@@ -17,14 +17,14 @@ import {
 } from '@angular/core';
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { getTinymce } from '../TinyMCE';
+import { getEditor42 } from '../Editor42';
 import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined, setMode } from '../utils/Utils';
 import * as DisabledUtils from '../utils/DisabledUtils';
 import { EventObj, Events } from './Events';
 import { ScriptLoader } from '../utils/ScriptLoader';
-import type { Editor as TinyMCEEditor, TinyMCE } from 'tinymce';
+import type { Editor as Editor42Editor, Editor42 } from 'editor42';
 
-type EditorOptions = Parameters<TinyMCE['init']>[0];
+type EditorOptions = Parameters<Editor42['init']>[0];
 
 export const TINYMCE_SCRIPT_SRC = new InjectionToken<string>('TINYMCE_SCRIPT_SRC');
 
@@ -47,7 +47,6 @@ export type Version = `${'4' | '5' | '6' | '7' | '8'}${'' | '-dev' | '-testing' 
 })
 
 /**
- * @see {@link https://www.tiny.cloud/docs/tinymce/7/angular-ref/} for the TinyMCE Angular Technical Reference
  */
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
@@ -103,7 +102,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private _element?: HTMLElement;
   private _disabled?: boolean;
   private _readonly?: boolean;
-  private _editor?: TinyMCEEditor;
+  private _editor?: Editor42Editor;
 
   private onTouchedCallback = noop;
   private onChangeCallback: any;
@@ -144,10 +143,10 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   public ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.id = this.id || uuid('tiny-angular');
+      this.id = this.id || uuid('editor42-angular');
       this.inline = this.inline !== undefined ? this.inline !== false : !!(this.init?.inline);
       this.createElement();
-      if (getTinymce() !== null) {
+      if (getEditor42() !== null) {
         this.initialise();
       } else if (this._element && this._element.ownerDocument) {
         // Caretaker note: the component might be destroyed before the script is loaded and its code is executed.
@@ -162,8 +161,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public ngOnDestroy() {
     this.destroy$.next();
 
-    if (getTinymce() !== null) {
-      getTinymce().remove(this._editor);
+    if (getEditor42() !== null) {
+      getEditor42().remove(this._editor);
     }
   }
 
@@ -174,7 +173,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       const existingElement = document.getElementById(this.id);
       if (existingElement && existingElement !== this._elementRef.nativeElement) {
         /* eslint no-console: ["error", { allow: ["warn"] }] */
-        console.warn(`TinyMCE-Angular: an element with id [${this.id}] already exists. Editors with duplicate Id will not be able to mount`);
+        console.warn(`editor42-angular: an element with id [${this.id}] already exists. Editors with duplicate Id will not be able to mount`);
       }
       this._element.id = this.id;
       if (isTextarea(this._element)) {
@@ -195,7 +194,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       license_key: this.licenseKey,
       plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
-      setup: (editor: TinyMCEEditor) => {
+      setup: (editor: Editor42Editor) => {
         this._editor = editor;
 
         listenTinyMCEEvent(editor, 'init', this.destroy$).subscribe(() => {
@@ -223,7 +222,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
 
     this.ngZone.runOutsideAngular(() => {
-      getTinymce().init(finalInit);
+      getEditor42().init(finalInit);
     });
   };
 
@@ -233,7 +232,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this.tinymceScriptSrc;
   }
 
-  private initEditor(editor: TinyMCEEditor) {
+  private initEditor(editor: Editor42Editor) {
     listenTinyMCEEvent(editor, 'blur', this.destroy$).subscribe(() => {
       this.cdRef.markForCheck();
       this.ngZone.run(() => this.onTouchedCallback());
@@ -257,7 +256,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
   }
 
-  private emitOnChange(editor: TinyMCEEditor) {
+  private emitOnChange(editor: Editor42Editor) {
     if (this.onChangeCallback) {
       this.onChangeCallback(editor.getContent({ format: this.outputFormat }));
     }

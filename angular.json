@@ -9,7 +9,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/tinymce-angular",
+            "outputPath": "dist/editor42-angular",
             "index": "",
             "main": "",
             "tsConfig": "tsconfig.json"

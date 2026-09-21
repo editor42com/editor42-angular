@@ -8,7 +8,7 @@
     "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "clean": "yarn rimraf dist",
     "lint": "eslint tinymce-angular-component/src/**/*.ts stories/**/*.ts",
-    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/",
+    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/editor42-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md LICENSE.txt CHANGELOG.md dist/editor42-angular/",
     "storybook": "ng run angular:storybook",
     "build-storybook": "ng run angular:build-storybook",
     "deploy-storybook": "yarn build-storybook && gh-pages -d ./storybook-static -u 'tiny-bot <no-reply@tiny.cloud>'"

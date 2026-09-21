@@ -6,9 +6,11 @@
  *
  */
 
-const getTinymce = () => {
+// Resolve the engine global. Editor42 wins when both engines are on the page; a real
+// TinyMCE is a supported fallback so this component can drive either engine.
+const getEditor42 = () => {
   const w = typeof window !== 'undefined' ? (window as any) : undefined;
-  return w && w.tinymce ? w.tinymce : null;
+  return w?.editor42 ?? w?.tinymce ?? null;
 };
 
-export { getTinymce };
+export { getEditor42 };

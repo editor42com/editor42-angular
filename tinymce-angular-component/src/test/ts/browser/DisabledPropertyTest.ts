@@ -4,7 +4,7 @@ import '../alien/InitTestEnvironment';
 import { EditorComponent } from '../../../main/ts/public_api';
 import { after, before, context, describe, it } from '@ephox/bedrock-client';
 import { eachVersionContext, editorHook } from '../alien/TestHooks';
-import { Editor } from 'tinymce';
+import type { Editor } from 'editor42';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ describe('DisabledPropertyTest', () => {
   const assertDisabledOption = (editor: Editor, expected: boolean) =>
     Assertions.assertEq(`TinyMCE should have disabled option set to ${expected}`, expected, editor.options.get('disabled'));
 
-  eachVersionContext([ '5', '6', '7.5.0' ], () => {
+  eachVersionContext([ 'editor42', '5', '6', '7.5.0' ], () => {
     const createFixture = editorHook(EditorComponent);
 
     it(`Component 'disabled' property is mapped to editor 'readonly' mode`, async () => {

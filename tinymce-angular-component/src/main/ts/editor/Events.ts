@@ -1,9 +1,9 @@
 import { Output, EventEmitter, Directive } from '@angular/core';
-import type { Editor as TinyMCEEditor } from 'tinymce';
+import type { Editor as Editor42Editor } from 'editor42';
 
 export interface EventObj<T> {
   event: T;
-  editor: TinyMCEEditor;
+  editor: Editor42Editor;
 }
 
 @Directive()

@@ -9,7 +9,7 @@ import { EditorComponent } from '../../../main/ts/public_api';
 import { eachVersionContext, editorHook, fixtureHook } from '../alien/TestHooks';
 import { By } from '@angular/platform-browser';
 import { first, firstValueFrom, switchMap } from 'rxjs';
-import type { Editor } from 'tinymce';
+import type { Editor } from 'editor42';
 import { fakeTypeInEditor } from '../alien/TestHelpers';
 
 type FormControlProps = Partial<Record<'touched' | 'pristine' | 'dirty' | 'valid', boolean>>;
@@ -21,7 +21,7 @@ describe('FormControlTest', () => {
     }
   };
 
-  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
+  eachVersionContext([ 'editor42', '4', '5', '6', '7', '8' ], () => {
     [ ChangeDetectionStrategy.Default, ChangeDetectionStrategy.OnPush ].forEach((changeDetection) => {
       context(`[formControl] with change detection: ${changeDetection}`, () => {
         @Component({
