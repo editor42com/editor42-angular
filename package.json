@@ -1,6 +1,6 @@
 {
-  "description": "Official TinyMCE Angular Component",
-  "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
+  "description": "Official Editor42 Angular Component",
+  "author": "Editor42 contributors",
   "license": "MIT",
   "scripts": {
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
@@ -76,5 +76,5 @@
     "zone.js": "~0.14.8"
   },
   "version": "9.1.1",
-  "name": "@tinymce/tinymce-angular"
+  "name": "@editor42/editor42-angular"
 }

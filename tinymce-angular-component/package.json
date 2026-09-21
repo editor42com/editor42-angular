@@ -1,9 +1,13 @@
 {
-  "name": "@tinymce/tinymce-angular",
-  "description": "Official TinyMCE Angular Component",
+  "name": "@editor42/editor42-angular",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "description": "Official Editor42 Angular Component",
   "version": "",
-  "repository": "https://github.com/tinymce/tinymce-angular.git",
-  "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
+  "repository": "https://github.com/editor42com/editor42-angular.git",
+  "author": "Editor42 contributors",
   "license": "MIT",
   "private": false,
   "peerDependencies": {
