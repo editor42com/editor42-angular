@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.0.0 - 2026-09-21
+
+### Changed
+- Forked @tinymce/tinymce-angular 9.1.1 as @editor42/editor42-angular, targeting Editor42.
+- The npm tarball now ships LICENSE.txt and CHANGELOG.md alongside the readme.
+- Renamed the identifiers this component looks for: it resolves the editor42 global and falls back to a stock TinyMCE when that is what the page has loaded.
+- The script source is now the EDITOR42_SCRIPT_SRC injection token, with TINYMCE_SCRIPT_SRC kept as a deprecated alias, and the no-token fallback loads from https://cdn.editor42.com on the latest channel through the new channel input.
+- Bumped the @angular/material dev dependency past the mdc canary packages that upstream removed from the registry.
+
+### Removed
+- All API-key and licence-key handling. The inputs are still accepted so existing code compiles, but no key is read, stored or sent, and no request reaches a vendor cloud.
+- Vendor CI, release tooling and the vendor cloud test matrix.
+
 ## 9.1.1 - 2025-10-31
 
 ### Fixed
