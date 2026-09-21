@@ -3,11 +3,9 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  Input,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import type { EditorComponent } from '../../tinymce-angular-component/src/main/ts/public_api';
-import { apiKey } from 'stories/Settings';
 
 @Component({
   selector: 'form-with-on-push',
@@ -15,7 +13,6 @@ import { apiKey } from 'stories/Settings';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormWithOnPushComponent {
-  @Input() public apiKey = apiKey;
   public readonly initialValue = '';
   public readonly init: EditorComponent['init'] = {
     plugins: [ 'help' ],

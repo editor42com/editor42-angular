@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
 import { Component } from '@angular/core';
-import { apiKey } from '../Settings';
 
 @Component({
   selector: 'event-binding',
   templateUrl: './EventBinding.component.html',
 })
 export class EventBindingComponent {
-  public apiKey = apiKey;
   public fieldValue = 'some value';
   public initObject = {
     height: 500,

@@ -18,7 +18,7 @@ import {
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { getEditor42 } from '../Editor42';
-import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined, setMode } from '../utils/Utils';
+import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined, normalizeChannel, setMode } from '../utils/Utils';
 import * as DisabledUtils from '../utils/DisabledUtils';
 import { EventObj, Events } from './Events';
 import { ScriptLoader } from '../utils/ScriptLoader';
@@ -26,6 +26,8 @@ import type { Editor as Editor42Editor, Editor42 } from 'editor42';
 
 type EditorOptions = Parameters<Editor42['init']>[0];
 
+export const EDITOR42_SCRIPT_SRC = new InjectionToken<string>('EDITOR42_SCRIPT_SRC');
+/** Deprecated alias of EDITOR42_SCRIPT_SRC; the editor42 token wins when both are provided. */
 export const TINYMCE_SCRIPT_SRC = new InjectionToken<string>('TINYMCE_SCRIPT_SRC');
 
 const EDITOR_COMPONENT_VALUE_ACCESSOR = {
@@ -35,6 +37,8 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
 };
 
 export type Version = `${'4' | '5' | '6' | '7' | '8'}${'' | '-dev' | '-testing' | `.${number}` | `.${number}.${number}`}`;
+
+export type Channel = 'latest' | `latest-${number}` | `42.${number}` | `42.${number}.${number}`;
 
 @Component({
   selector: 'editor',
@@ -50,9 +54,14 @@ export type Version = `${'4' | '5' | '6' | '7' | '8'}${'' | '-dev' | '-testing' 
  */
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
-  @Input() public cloudChannel: Version = '8';
-  @Input() public apiKey = 'no-api-key';
-  @Input() public licenseKey = 'gpl';
+  /** The cdn.editor42.com channel for the fallback loader: latest (default), latest-N or an exact version. */
+  @Input() public channel?: Channel | Version;
+  /** Deprecated alias of channel; TinyMCE-style numeric channels load latest. */
+  @Input() public cloudChannel?: Version;
+  /** Removed. Accepted so existing code compiles; never read or sent anywhere. */
+  @Input() public apiKey?: string;
+  /** Removed. Accepted so existing code compiles; never read or sent anywhere. */
+  @Input() public licenseKey?: string;
   @Input() public init?: EditorOptions;
   @Input() public id = '';
   @Input() public initialValue?: string;
@@ -114,6 +123,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     ngZone: NgZone,
     private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject(EDITOR42_SCRIPT_SRC) private editor42ScriptSrc?: string,
     @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
   ) {
     super();
@@ -191,7 +201,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       inline: this.inline,
       disabled: this.disabled,
       readonly: this.readonly,
-      license_key: this.licenseKey,
       plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: Editor42Editor) => {
@@ -227,9 +236,12 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   };
 
   private getScriptSrc() {
-    return isNullOrUndefined(this.tinymceScriptSrc) ?
-      `https://cdn.tiny.cloud/1/${this.apiKey}/tinymce/${this.cloudChannel}/tinymce.min.js` :
-      this.tinymceScriptSrc;
+    // editor42ScriptSrc wins over the deprecated tinymceScriptSrc alias; with neither
+    // provided the script comes from the editor42 cdn, no key of any kind
+    const scriptSrc = this.editor42ScriptSrc ?? this.tinymceScriptSrc;
+    return isNullOrUndefined(scriptSrc) ?
+      `https://cdn.editor42.com/editor42/${normalizeChannel(this.channel ?? this.cloudChannel)}/editor42.min.js` :
+      scriptSrc;
   }
 
   private initEditor(editor: Editor42Editor) {

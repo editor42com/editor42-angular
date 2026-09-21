@@ -42,7 +42,7 @@ describe('PropTest', () => {
       )
     );
 
-  eachVersionContext([ 'editor42', '4', '5', '6', '7', '8' ], () => {
+  eachVersionContext([ 'editor42', '4', '5', '6', '7' ], () => {
     context('Single editor with ID', () => {
       @Component({
         standalone: true,

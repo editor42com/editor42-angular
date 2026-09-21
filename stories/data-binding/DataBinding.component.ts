@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Component } from '@angular/core';
-import { apiKey, modelEvents, sampleContent } from '../Settings';
+import { modelEvents, sampleContent } from '../Settings';
 
 @Component({
   selector: 'binding',
@@ -9,7 +9,6 @@ import { apiKey, modelEvents, sampleContent } from '../Settings';
 export class BindingComponent {
   public isEditingContent = true;
   public content = sampleContent;
-  public apiKey = apiKey;
   public modelEvents = modelEvents;
 
   public editContent() {

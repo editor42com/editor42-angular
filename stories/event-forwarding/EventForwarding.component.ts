@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
 import { Component } from '@angular/core';
-import { apiKey } from '../Settings';
 
 @Component({
   selector: 'event-forwarding',
   templateUrl: './EventForwarding.component.html',
 })
 export class EventForwardingComponent {
-  public apiKey = apiKey;
   public allowed = [ 'onMouseLeave', 'onMouseEnter' ];
   public ignore = [ 'onMouseLeave' ];
   public fieldValue = 'some value';

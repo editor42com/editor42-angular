@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { apiKey } from '../Settings';
 
 @Component({
   selector: 'blog',
@@ -21,7 +20,6 @@ import { apiKey } from '../Settings';
 export class BlogComponent {
   public submitted = false;
   public post = { title: '', content: '' };
-  public apiKey = apiKey;
 
   public onSubmit() {
     this.submitted = !this.submitted;

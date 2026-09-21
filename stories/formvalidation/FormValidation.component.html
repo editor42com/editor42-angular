@@ -18,7 +18,6 @@
         [(ngModel)]="post.content"
         #content="ngModel"
         [ngClass]="{ 'valid': content.touched && content.valid, 'invalid': content.touched && !content.valid }"
-        [apiKey]="apiKey"
         ></editor>
     </div>
 

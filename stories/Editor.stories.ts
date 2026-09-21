@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { EditorComponent } from 'tinymce-angular-component/src/main/ts/public_api';
-import { apiKey, sampleContent } from './Settings';
+import { sampleContent } from './Settings';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventBindingComponent } from './event-binding/EventBinding.component';
 import { EventForwardingComponent } from './event-forwarding/EventForwarding.component';
@@ -26,7 +26,6 @@ export default meta;
 export const IframeStory: StoryObj<EditorComponent> = {
   name: 'Iframe Editor',
   args: {
-    apiKey,
     initialValue: sampleContent,
     init: {
       height: 300,
@@ -40,7 +39,7 @@ export const InlineStory: StoryObj<EditorComponent> = {
   render: () => ({
     template: `
       <div style="padding-top: 100px;">
-        <editor apiKey="${apiKey}" inline initialValue='${sampleContent}'></editor>
+        <editor inline initialValue='${sampleContent}'></editor>
       </div>
     `
   })
@@ -104,7 +103,7 @@ export const FormStateStory: StoryObj<EditorComponent> = {
       imports: [ ReactiveFormsModule, FormsModule ],
       declarations: [ FormWithOnPushComponent ],
     },
-    template: `<form-with-on-push apiKey="${apiKey}"/>`
+    template: `<form-with-on-push/>`
   }),
 };
 

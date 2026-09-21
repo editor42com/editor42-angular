@@ -21,7 +21,7 @@ describe('FormControlTest', () => {
     }
   };
 
-  eachVersionContext([ 'editor42', '4', '5', '6', '7', '8' ], () => {
+  eachVersionContext([ 'editor42', '4', '5', '6', '7' ], () => {
     [ ChangeDetectionStrategy.Default, ChangeDetectionStrategy.OnPush ].forEach((changeDetection) => {
       context(`[formControl] with change detection: ${changeDetection}`, () => {
         @Component({

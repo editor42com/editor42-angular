@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { apiKey, sampleContent } from '../Settings';
+import { sampleContent } from '../Settings';
 
 @Component({
   selector: 'disabling',
@@ -7,7 +7,6 @@ import { apiKey, sampleContent } from '../Settings';
 })
 export class DisablingComponent {
   public isDisabled = false;
-  public apiKey = apiKey;
   public initialValue = sampleContent;
   public toggleDisabled = () => (this.isDisabled = !this.isDisabled);
 }

@@ -1,14 +1,12 @@
 /* eslint-disable no-console */
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { apiKey } from 'stories/Settings';
 
 @Component({
   selector: 'form-control',
   templateUrl: './FormControl.component.html',
 })
 export class FormControlComponent {
-  public apiKey = apiKey;
   public formControl: FormControl<string | null>;
 
   // eslint-disable-next-line @typescript-eslint/no-parameter-properties

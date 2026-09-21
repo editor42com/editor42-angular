@@ -1,5 +1,4 @@
 
-const apiKey = 'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc';
 const modelEvents = 'change input undo redo';
 const sampleContent = `
 <h2 style="text-align: center;">
@@ -10,7 +9,6 @@ const sampleContent = `
 </p>`;
 
 export {
-  apiKey,
   modelEvents,
   sampleContent
 };

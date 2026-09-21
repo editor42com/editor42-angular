@@ -1,3 +1,3 @@
 export * from './editor/editor.module';
 export { EventObj } from './editor/Events';
-export { EditorComponent, TINYMCE_SCRIPT_SRC } from './editor/editor.component';
+export { EditorComponent, EDITOR42_SCRIPT_SRC, TINYMCE_SCRIPT_SRC } from './editor/editor.component';

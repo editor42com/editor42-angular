@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { apiKey, sampleContent } from '../Settings';
+import { sampleContent } from '../Settings';
 
 @Component({
   selector: 'readonly',
@@ -7,7 +7,6 @@ import { apiKey, sampleContent } from '../Settings';
 })
 export class ReadonlyComponent {
   public isReadonly = false;
-  public apiKey = apiKey;
   public initialValue = sampleContent;
   public toggleReadonly = () => (this.isReadonly = !this.isReadonly);
 }

@@ -82,6 +82,20 @@ const normalizePluginArray = (plugins?: string | string[]): string[] => {
 const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | string[]) =>
   normalizePluginArray(initPlugins).concat(normalizePluginArray(inputPlugins));
 
+// TinyMCE-style numeric channels have no meaning on cdn.editor42.com. Migrated code that
+// pinned one gets the stable 'latest' alias instead: the 42 major never breaks by policy.
+const normalizeChannel = (channel: string | undefined): string => {
+  if (channel === undefined || channel === '') {
+    return 'latest';
+  }
+  if (/^[4-8]([.-]|$)/.test(channel)) {
+    // eslint-disable-next-line no-console
+    console.warn(`editor42-angular: cloudChannel '${channel}' is a TinyMCE channel; loading 'latest' instead. Set the 'channel' input to silence this.`);
+    return 'latest';
+  }
+  return channel;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop: (...args: any[]) => void = () => { };
 
@@ -101,6 +115,7 @@ const setMode = (editor: Editor, mode: 'readonly' | 'design') => {
 };
 
 export {
+  normalizeChannel,
   listenTinyMCEEvent,
   bindHandlers,
   uuid,

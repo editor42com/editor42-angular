@@ -1,6 +1,5 @@
 /* eslint-disable max-classes-per-file */
 import { Component, TemplateRef, Input } from '@angular/core';
-import { apiKey } from '../Settings';
 
 /*
   Normally when projecting content you would use ng-content but this is not something that works
@@ -48,13 +47,12 @@ export class ContainerComponent {
   selector: 'content-projection',
   template: `
     <ng-template #editorTemplate>
-      <editor [apiKey]="apiKey" [(ngModel)]="editorValue"></editor>
+      <editor [(ngModel)]="editorValue"></editor>
     </ng-template>
 
     <container [editorTemplate]="editorTemplate"></container>
   `
 })
 export class ContentProjectionComponent {
-  public apiKey = apiKey;
   public editorValue = '';
 }
